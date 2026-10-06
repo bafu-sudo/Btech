@@ -3,8 +3,8 @@ import { Volume2, VolumeX, Sparkles, User, Award } from 'lucide-react';
 import { brassAudio } from '../audio/brassAudio';
 
 interface HeaderProps {
-  activeTab: 'academy' | 'scales' | 'percussion' | 'quiz' | 'about';
-  setActiveTab: (tab: 'academy' | 'scales' | 'percussion' | 'quiz' | 'about') => void;
+  activeTab: 'academy' | 'scales' | 'trombone' | 'percussion' | 'quiz' | 'about';
+  setActiveTab: (tab: 'academy' | 'scales' | 'trombone' | 'percussion' | 'quiz' | 'about') => void;
   isMuted: boolean;
   setIsMuted: (muted: boolean) => void;
 }
@@ -63,7 +63,18 @@ export const Header: React.FC<HeaderProps> = ({
                 : 'hover:text-amber-200'
             }`}
           >
-            Scales & Valves
+            All C Scales & Valves
+          </button>
+
+          <button
+            onClick={() => setActiveTab('trombone')}
+            className={`whitespace-nowrap pb-1 pt-1 transition-colors ${
+              activeTab === 'trombone'
+                ? 'border-b-2 border-amber-400 font-semibold text-amber-400'
+                : 'hover:text-amber-200'
+            }`}
+          >
+            Trombone Slide Lab
           </button>
 
           <button

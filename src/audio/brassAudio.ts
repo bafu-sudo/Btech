@@ -30,18 +30,49 @@ class BrassAudioEngine {
    * Plays an authentic brass tone
    * @param freq Target fundamental frequency in Hz
    * @param duration Optional duration in seconds (if omitted, sustained until returned stop() is called)
-   * @param instrumentType Instrument coloration (cornet = bright, horn = mellow, bass = deep)
+   * @param instrumentType Instrument coloration (cornet = bright, horn = mellow, bass = deep, trombone = punchy)
    */
   public playBrassTone(
     freq: number,
     duration?: number,
-    instrumentType: 'cornet' | 'horn' | 'euphonium' | 'bass' = 'cornet'
+    instrumentType: 'cornet' | 'horn' | 'euphonium' | 'bass' | 'trombone' | 'glockenspiel' = 'cornet'
   ): () => void {
     if (this.isMuted || freq <= 0) return () => {};
     this.initContext();
     if (!this.ctx) return () => {};
 
     const now = this.ctx.currentTime;
+
+    if (instrumentType === 'glockenspiel') {
+      const osc = this.ctx.createOscillator();
+      const overtone = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'sine';
+      overtone.type = 'sine';
+      osc.frequency.setValueAtTime(freq, now);
+      overtone.frequency.setValueAtTime(freq * 2.76, now);
+
+      gain.gain.setValueAtTime(0.28, now);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + (duration || 0.7));
+
+      osc.connect(gain);
+      overtone.connect(gain);
+      gain.connect(this.ctx.destination);
+
+      osc.start(now);
+      overtone.start(now);
+      const stopTime = now + (duration || 0.7);
+      osc.stop(stopTime);
+      overtone.stop(stopTime);
+
+      return () => {
+        try {
+          osc.stop();
+          overtone.stop();
+        } catch {}
+      };
+    }
+
     const osc = this.ctx.createOscillator();
     const subOsc = this.ctx.createOscillator();
     const filter = this.ctx.createBiquadFilter();
@@ -51,8 +82,8 @@ class BrassAudioEngine {
     // Subtle vibrato LFO for warmth
     const lfo = this.ctx.createOscillator();
     const lfoGain = this.ctx.createGain();
-    lfo.frequency.setValueAtTime(5.4, now); // ~5.4 Hz natural brass vibrato
-    lfoGain.gain.setValueAtTime(instrumentType === 'bass' ? 0.8 : 1.4, now);
+    lfo.frequency.setValueAtTime(instrumentType === 'trombone' ? 4.8 : 5.4, now);
+    lfoGain.gain.setValueAtTime(instrumentType === 'bass' ? 0.8 : instrumentType === 'trombone' ? 1.8 : 1.4, now);
     lfo.connect(osc.frequency);
     lfo.connect(subOsc.frequency);
     lfo.start(now);
@@ -64,27 +95,32 @@ class BrassAudioEngine {
     osc.frequency.exponentialRampToValueAtTime(freq, now + 0.035);
 
     // Sub-oscillator for body / warmth (octave lower or square warm fundamental)
-    subOsc.type = 'triangle';
+    subOsc.type = instrumentType === 'trombone' ? 'sawtooth' : 'triangle';
     subOsc.frequency.setValueAtTime(freq, now);
 
     // Filter tuning according to instrument character
     filter.type = 'lowpass';
-    const cutoff = instrumentType === 'bass' ? Math.min(1800, freq * 7) : Math.min(3800, freq * 8);
+    const cutoff = instrumentType === 'bass' 
+      ? Math.min(1800, freq * 7) 
+      : instrumentType === 'trombone'
+      ? Math.min(4200, freq * 9)
+      : Math.min(3800, freq * 8);
+
     filter.frequency.setValueAtTime(cutoff * 0.4, now);
     // Brass attack envelope on filter: opening up brightly then settling
     filter.frequency.exponentialRampToValueAtTime(cutoff, now + 0.05);
     filter.frequency.exponentialRampToValueAtTime(cutoff * 0.75, now + 0.25);
-    filter.Q.setValueAtTime(instrumentType === 'horn' ? 2.0 : 3.5, now);
+    filter.Q.setValueAtTime(instrumentType === 'horn' ? 2.0 : instrumentType === 'trombone' ? 4.0 : 3.5, now);
 
     // Formant bell filter for brass bell resonance (~1200Hz - 2200Hz)
     formantFilter.type = 'peaking';
-    formantFilter.frequency.setValueAtTime(instrumentType === 'bass' ? 700 : 1600, now);
+    formantFilter.frequency.setValueAtTime(instrumentType === 'bass' ? 700 : instrumentType === 'trombone' ? 1400 : 1600, now);
     formantFilter.Q.setValueAtTime(2.2, now);
-    formantFilter.gain.setValueAtTime(4.0, now);
+    formantFilter.gain.setValueAtTime(instrumentType === 'trombone' ? 5.5 : 4.0, now);
 
     // Gain envelope
     mainGain.gain.setValueAtTime(0.0001, now);
-    const peakVolume = instrumentType === 'bass' ? 0.35 : 0.25;
+    const peakVolume = instrumentType === 'bass' ? 0.35 : instrumentType === 'trombone' ? 0.32 : 0.25;
     mainGain.gain.exponentialRampToValueAtTime(peakVolume, now + 0.04); // brass chiff attack
     mainGain.gain.exponentialRampToValueAtTime(peakVolume * 0.75, now + 0.15); // sustain level
 
@@ -125,6 +161,52 @@ class BrassAudioEngine {
   }
 
   /**
+   * Plays a continuous smooth Trombone slide glissando between two pitches
+   */
+  public playTromboneGlissando(
+    startFreq: number,
+    endFreq: number,
+    durationSeconds: number = 0.85
+  ): () => void {
+    if (this.isMuted) return () => {};
+    this.initContext();
+    if (!this.ctx) return () => {};
+
+    const now = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const filter = this.ctx.createBiquadFilter();
+    const mainGain = this.ctx.createGain();
+
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(startFreq, now);
+    // Smooth glissando continuous pitch slide
+    osc.frequency.exponentialRampToValueAtTime(endFreq, now + durationSeconds);
+
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(Math.max(2200, startFreq * 8), now);
+    filter.frequency.exponentialRampToValueAtTime(Math.max(2200, endFreq * 8), now + durationSeconds);
+    filter.Q.setValueAtTime(3.8, now);
+
+    mainGain.gain.setValueAtTime(0.0001, now);
+    mainGain.gain.exponentialRampToValueAtTime(0.32, now + 0.05);
+    mainGain.gain.setValueAtTime(0.30, now + durationSeconds - 0.05);
+    mainGain.gain.exponentialRampToValueAtTime(0.0001, now + durationSeconds + 0.15);
+
+    osc.connect(filter);
+    filter.connect(mainGain);
+    mainGain.connect(this.ctx.destination);
+
+    osc.start(now);
+    osc.stop(now + durationSeconds + 0.2);
+
+    return () => {
+      try {
+        osc.stop();
+      } catch {}
+    };
+  }
+
+  /**
    * Plays a sequence of notes (e.g. scale) with synchronized callbacks
    */
   public playScaleSequence(
@@ -132,7 +214,7 @@ class BrassAudioEngine {
     noteDurationMs: number = 420,
     onNoteChange?: (index: number) => void,
     onComplete?: () => void,
-    instrumentType: 'cornet' | 'horn' | 'euphonium' | 'bass' = 'cornet'
+    instrumentType: 'cornet' | 'horn' | 'euphonium' | 'bass' | 'trombone' | 'glockenspiel' = 'cornet'
   ): () => void {
     if (frequencies.length === 0) return () => {};
 

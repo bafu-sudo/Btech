@@ -25,7 +25,7 @@ export interface NoteDefinition {
 export interface ScaleDefinition {
   id: string;
   title: string;
-  instrumentKey: 'Bb' | 'Eb';
+  instrumentKey: BrassInstrumentKey;
   instrumentName: string;
   writtenKey: string;
   concertKey: string;
@@ -36,6 +36,8 @@ export interface ScaleDefinition {
     concertName: string;
     valves: number[];
     valveLabel: string;
+    slidePosition?: number;
+    slideLabel?: string;
     frequencyHz: number;
   }[];
 }

@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import { Header } from './components/Header';
 import { BrassAcademy } from './components/BrassAcademy';
 import { ScaleStudio } from './components/ScaleStudio';
+import { TromboneSlideStudio } from './components/TromboneSlideStudio';
 import { PercussionLab } from './components/PercussionLab';
 import { QuizStudio } from './components/QuizStudio';
 import { AboutFounder } from './components/AboutFounder';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<'academy' | 'scales' | 'percussion' | 'quiz' | 'about'>('academy');
+  const [activeTab, setActiveTab] = useState<'academy' | 'scales' | 'trombone' | 'percussion' | 'quiz' | 'about'>('academy');
   const [isMuted, setIsMuted] = useState<boolean>(false);
 
   return (
@@ -24,6 +25,7 @@ export default function App() {
       <main className="flex-1">
         {activeTab === 'academy' && <BrassAcademy />}
         {activeTab === 'scales' && <ScaleStudio />}
+        {activeTab === 'trombone' && <TromboneSlideStudio />}
         {activeTab === 'percussion' && <PercussionLab />}
         {activeTab === 'quiz' && <QuizStudio />}
         {activeTab === 'about' && <AboutFounder />}

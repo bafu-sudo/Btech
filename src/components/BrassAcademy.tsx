@@ -13,6 +13,7 @@ import {
 import { BRASS_INSTRUMENTS, TRANSPOSITION_PRINCIPLES, BRITISH_BAND_SECTIONS } from '../data/brassData';
 import { BrassInstrumentInfo } from '../types';
 import { brassAudio } from '../audio/brassAudio';
+import heroImg from '../assets/images/brass_instruments_hero_1791290148558.jpg';
 
 export const BrassAcademy: React.FC = () => {
   const [selectedInstrument, setSelectedInstrument] = useState<BrassInstrumentInfo>(BRASS_INSTRUMENTS[0]);
@@ -20,21 +21,25 @@ export const BrassAcademy: React.FC = () => {
   
   // Interactive Transposition Explorer State
   const [transposerRoot, setTransposerRoot] = useState<string>('C');
-  const [transposerInst, setTransposerInst] = useState<'Bb' | 'Eb'>('Bb');
+  const [transposerInst, setTransposerInst] = useState<'Bb' | 'Eb' | 'Trombone'>('Bb');
 
   const notesList = [
-    { written: 'C', freqBb: 233.08, concertBb: 'Bb', freqEb: 311.13, concertEb: 'Eb', valves: 'Open' },
-    { written: 'D', freqBb: 261.63, concertBb: 'C', freqEb: 349.23, concertEb: 'F', valves: '1 + 3' },
-    { written: 'E', freqBb: 293.66, concertBb: 'D', freqEb: 392.00, concertEb: 'G', valves: '1 + 2' },
-    { written: 'F', freqBb: 311.13, concertBb: 'Eb', freqEb: 415.30, concertEb: 'Ab', valves: '1st' },
-    { written: 'G', freqBb: 349.23, concertBb: 'F', freqEb: 466.16, concertEb: 'Bb', valves: 'Open' },
-    { written: 'A', freqBb: 392.00, concertBb: 'G', freqEb: 523.25, concertEb: 'C', valves: '1 + 2' },
-    { written: 'B', freqBb: 440.00, concertBb: 'A', freqEb: 587.33, concertEb: 'D', valves: '2nd' },
-    { written: 'High C', freqBb: 466.16, concertBb: 'Bb', freqEb: 622.25, concertEb: 'Eb', valves: 'Open' }
+    { written: 'C', freqBb: 233.08, concertBb: 'Bb', freqEb: 311.13, concertEb: 'Eb', freqTrombone: 116.54, concertTrombone: 'Bb2', valves: 'Open', slidePos: '1st Pos (Closed)' },
+    { written: 'D', freqBb: 261.63, concertBb: 'C', freqEb: 349.23, concertEb: 'F', freqTrombone: 130.81, concertTrombone: 'C3', valves: '1 + 3', slidePos: '6th Pos (Full Reach)' },
+    { written: 'E', freqBb: 293.66, concertBb: 'D', freqEb: 392.00, concertEb: 'G', freqTrombone: 146.83, concertTrombone: 'D3', valves: '1 + 2', slidePos: '4th Pos (Past Bell)' },
+    { written: 'F', freqBb: 311.13, concertBb: 'Eb', freqEb: 415.30, concertEb: 'Ab', freqTrombone: 155.56, concertTrombone: 'Eb3', valves: '1st', slidePos: '3rd Pos (Bell Rim)' },
+    { written: 'G', freqBb: 349.23, concertBb: 'F', freqEb: 466.16, concertEb: 'Bb', freqTrombone: 174.61, concertTrombone: 'F3', valves: 'Open', slidePos: '1st Pos (Closed)' },
+    { written: 'A', freqBb: 392.00, concertBb: 'G', freqEb: 523.25, concertEb: 'C', freqTrombone: 196.00, concertTrombone: 'G3', valves: '1 + 2', slidePos: '4th Pos (Harmonic)' },
+    { written: 'B', freqBb: 440.00, concertBb: 'A', freqEb: 587.33, concertEb: 'D', freqTrombone: 220.00, concertTrombone: 'A3', valves: '2nd', slidePos: '2nd Pos (3" out)' },
+    { written: 'High C', freqBb: 466.16, concertBb: 'Bb', freqEb: 622.25, concertEb: 'Eb', freqTrombone: 233.08, concertTrombone: 'Bb3', valves: 'Open', slidePos: '1st Pos (Closed)' }
   ];
 
   const playNoteAudio = (freq: number) => {
-    brassAudio.playBrassTone(freq, 0.6, selectedInstrument.fundamentalKey === 'Eb' ? 'horn' : 'cornet');
+    brassAudio.playBrassTone(
+      freq, 
+      0.6, 
+      transposerInst === 'Trombone' ? 'trombone' : selectedInstrument.fundamentalKey === 'Eb' ? 'horn' : 'cornet'
+    );
   };
 
   return (
@@ -270,7 +275,7 @@ export const BrassAcademy: React.FC = () => {
             </p>
 
             <div className="flex flex-wrap items-center gap-4 mb-4">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap">
                 <span className="text-xs font-semibold text-slate-300">Instrument Type:</span>
                 <button
                   onClick={() => setTransposerInst('Bb')}
@@ -288,6 +293,14 @@ export const BrassAcademy: React.FC = () => {
                 >
                   Eb Instruments (Tenor Horn/Eb Bass)
                 </button>
+                <button
+                  onClick={() => setTransposerInst('Trombone')}
+                  className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors ${
+                    transposerInst === 'Trombone' ? 'bg-amber-400 text-slate-950' : 'bg-slate-800 text-slate-300'
+                  }`}
+                >
+                  Bb Trombone (Slide Positions 1–7)
+                </button>
               </div>
             </div>
 
@@ -296,7 +309,9 @@ export const BrassAcademy: React.FC = () => {
                 <thead>
                   <tr className="border-b border-slate-800 text-slate-400">
                     <th className="py-2.5 px-3">Written Note</th>
-                    <th className="py-2.5 px-3">Standard Valves</th>
+                    <th className="py-2.5 px-3">
+                      {transposerInst === 'Trombone' ? 'Slide Position' : 'Standard Valves'}
+                    </th>
                     <th className="py-2.5 px-3">Sounding Concert Pitch</th>
                     <th className="py-2.5 px-3">Harmonic Frequency</th>
                     <th className="py-2.5 px-3 text-right">Sound Test</th>
@@ -304,12 +319,13 @@ export const BrassAcademy: React.FC = () => {
                 </thead>
                 <tbody className="divide-y divide-slate-800/60 font-mono tabular-nums">
                   {notesList.map((n, i) => {
-                    const soundPitch = transposerInst === 'Bb' ? n.concertBb : n.concertEb;
-                    const freq = transposerInst === 'Bb' ? n.freqBb : n.freqEb;
+                    const soundPitch = transposerInst === 'Trombone' ? n.concertTrombone : transposerInst === 'Bb' ? n.concertBb : n.concertEb;
+                    const freq = transposerInst === 'Trombone' ? n.freqTrombone : transposerInst === 'Bb' ? n.freqBb : n.freqEb;
+                    const fingeringOrSlide = transposerInst === 'Trombone' ? n.slidePos : n.valves;
                     return (
                       <tr key={i} className="hover:bg-slate-800/40 transition-colors">
                         <td className="py-2 px-3 font-serif font-bold text-slate-200">{n.written}</td>
-                        <td className="py-2 px-3 text-amber-300">{n.valves}</td>
+                        <td className="py-2 px-3 text-amber-300 font-bold">{fingeringOrSlide}</td>
                         <td className="py-2 px-3 text-emerald-300 font-semibold">Concert {soundPitch}</td>
                         <td className="py-2 px-3 text-slate-400">{freq.toFixed(1)} Hz</td>
                         <td className="py-2 px-3 text-right">

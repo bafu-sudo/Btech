@@ -2,5 +2,7 @@
   "name": "btech",
   "description": "btech — British brass band education platform founded by Nokuvimba Bafu. Teaching instruments from cornet to percussion, notation, fingerings, and transposition.",
   "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
 }

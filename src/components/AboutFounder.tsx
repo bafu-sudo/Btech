@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Sparkles, Music2, Heart, Award, Globe, BookOpen, Camera, Upload } from 'lucide-react';
+import exactFounderPhoto from '../assets/images/nokuvimba_bafu_exact_1791291814595.jpg';
 
 export const AboutFounder: React.FC = () => {
-  const [photoSrc, setPhotoSrc] = useState<string>('/735b0bcb-b35b-4007-949d-6f9ca3a312e0.jpg');
+  const [photoSrc, setPhotoSrc] = useState<string>(exactFounderPhoto);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {

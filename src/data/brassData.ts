@@ -207,12 +207,92 @@ export const VALVE_FINGERINGS = [
   { combo: '1st + 2nd + 3rd Valve', valves: [1, 2, 3], semitonesLower: 6, notesExample: 'F#3, C#4, F#4, A#4, C#5', description: 'Lowers pitch by 6 semitones (tritone / augmented 4th). All valves down.' }
 ];
 
+export const TROMBONE_SLIDE_POSITIONS = [
+  {
+    position: 1,
+    name: '1st Position',
+    distanceInches: 0,
+    distanceCm: 0,
+    relativeToBell: 'Slide fully closed against rubber bumper',
+    fundamentalHarmonic: 'Bb1 / Bb2',
+    notesAvailable: 'Bb2, F3, Bb3, D4, F4, Ab4, Bb4',
+    semitonesDown: 0,
+    description: 'Home base. Slide is completely retracted. Natural tube length of the B♭ trombone.'
+  },
+  {
+    position: 2,
+    name: '2nd Position',
+    distanceInches: 3.25,
+    distanceCm: 8.2,
+    relativeToBell: 'Roughly 3 inches out, midway between bumper and bell rim',
+    fundamentalHarmonic: 'A1 / A2',
+    notesAvailable: 'A2, E3, A3, C#4, E4, G4, A4',
+    semitonesDown: 1,
+    description: 'Lowers pitch by 1 semitone. Equivalent to 2nd valve on cornet/horn.'
+  },
+  {
+    position: 3,
+    name: '3rd Position',
+    distanceInches: 6.75,
+    distanceCm: 17.1,
+    relativeToBell: 'Outer slide brace lines up directly with the bell rim',
+    fundamentalHarmonic: 'Ab1 / Ab2',
+    notesAvailable: 'Ab2, Eb3, Ab3, C4, Eb4, Gb4, Ab4',
+    semitonesDown: 2,
+    description: 'Lowers pitch by 2 semitones. Most reliable visual landmark: outer slide brace touches the bell rim!'
+  },
+  {
+    position: 4,
+    name: '4th Position',
+    distanceInches: 10.5,
+    distanceCm: 26.7,
+    relativeToBell: 'End of outer slide extends just beyond the bell rim',
+    fundamentalHarmonic: 'G1 / G2',
+    notesAvailable: 'G2, D3, G3, B3, D4, F4, G4',
+    semitonesDown: 3,
+    description: 'Lowers pitch by 3 semitones (minor 3rd). Equivalent to 1st+2nd valves.'
+  },
+  {
+    position: 5,
+    name: '5th Position',
+    distanceInches: 14.75,
+    distanceCm: 37.5,
+    relativeToBell: 'Roughly 4 inches past the bell rim',
+    fundamentalHarmonic: 'Gb1 / Gb2',
+    notesAvailable: 'Gb2, Db3, Gb3, Bb3, Db4, E4, Gb4',
+    semitonesDown: 4,
+    description: 'Lowers pitch by 4 semitones (major 3rd). Equivalent to 2nd+3rd valves.'
+  },
+  {
+    position: 6,
+    name: '6th Position',
+    distanceInches: 19.25,
+    distanceCm: 48.9,
+    relativeToBell: 'Arm extended near full reach, aligned with slide stockings',
+    fundamentalHarmonic: 'F1 / F2',
+    notesAvailable: 'F2, C3, F3, A3, C4, Eb4, F4',
+    semitonesDown: 5,
+    description: 'Lowers pitch by 5 semitones (perfect 4th). Used for low C and low F. Equivalent to 1st+3rd valves.'
+  },
+  {
+    position: 7,
+    name: '7th Position',
+    distanceInches: 24.0,
+    distanceCm: 61.0,
+    relativeToBell: 'Fingertips holding the slide brace at full arm extension',
+    fundamentalHarmonic: 'E1 / E2',
+    notesAvailable: 'E2, B2, E3, G#3, B3, D4, E4',
+    semitonesDown: 6,
+    description: 'Lowers pitch by 6 semitones (tritone). Maximum extension. Equivalent to 1st+2nd+3rd valves.'
+  }
+];
+
 export const SCALE_LESSONS: ScaleDefinition[] = [
   {
     id: 'c-scale-bb-cornet',
-    title: 'Written C Major Scale on Bb Cornet / Euphonium',
+    title: 'Written C Major Scale on Bb Cornet',
     instrumentKey: 'Bb',
-    instrumentName: 'Bb Cornet / Euphonium',
+    instrumentName: 'Bb Cornet',
     writtenKey: 'C Major (no sharps/flats)',
     concertKey: 'Bb Major (2 flats: Bb, Eb)',
     explanation: 'The foundation of all brass band tuition. Every beginner starts here. Notice how low C is open, D is 1+3, E is 1+2, F is 1, G is open, A is 1+2, B is 2, and high C is open.',
@@ -228,13 +308,32 @@ export const SCALE_LESSONS: ScaleDefinition[] = [
     ]
   },
   {
-    id: 'c-scale-eb-horn',
-    title: 'Written C Major Scale on Eb Tenor Horn / Eb Bass',
+    id: 'c-scale-bb-flugelhorn',
+    title: 'Written C Major Scale on Bb Flugelhorn',
+    instrumentKey: 'Bb',
+    instrumentName: 'Bb Flugelhorn',
+    writtenKey: 'C Major (no sharps/flats)',
+    concertKey: 'Bb Major (2 flats: Bb, Eb)',
+    explanation: 'The velvety bridge between cornets and tenor horns. Uses identical fingerings to the Bb cornet, but produces a deep, dark, lyrical conical voice beloved in Salvation Army and contest test pieces.',
+    notes: [
+      { name: 'C4 (Middle C)', octave: 4, concertName: 'Bb3', valves: [], valveLabel: 'Open', frequencyHz: 233.08 },
+      { name: 'D4', octave: 4, concertName: 'C4', valves: [1, 3], valveLabel: '1 + 3', frequencyHz: 261.63 },
+      { name: 'E4', octave: 4, concertName: 'D4', valves: [1, 2], valveLabel: '1 + 2', frequencyHz: 293.66 },
+      { name: 'F4', octave: 4, concertName: 'Eb4', valves: [1], valveLabel: '1st', frequencyHz: 311.13 },
+      { name: 'G4', octave: 4, concertName: 'F4', valves: [], valveLabel: 'Open', frequencyHz: 349.23 },
+      { name: 'A4', octave: 4, concertName: 'G4', valves: [1, 2], valveLabel: '1 + 2', frequencyHz: 392.00 },
+      { name: 'B4', octave: 4, concertName: 'A4', valves: [2], valveLabel: '2nd', frequencyHz: 440.00 },
+      { name: 'C5 (Treble C)', octave: 5, concertName: 'Bb4', valves: [], valveLabel: 'Open', frequencyHz: 466.16 }
+    ]
+  },
+  {
+    id: 'c-scale-eb-soprano',
+    title: 'Written C Major Scale on Eb Soprano Cornet',
     instrumentKey: 'Eb',
-    instrumentName: 'Eb Tenor Horn / Eb Bass',
+    instrumentName: 'Eb Soprano Cornet',
     writtenKey: 'C Major (no sharps/flats)',
     concertKey: 'Eb Major (3 flats: Bb, Eb, Ab)',
-    explanation: 'Notice the magic: The fingerings are EXACTLY the same as the Cornet! But because this instrument is pitched in Eb, it sounds in Concert Eb major.',
+    explanation: 'The soprano cornet plays identical fingerings to the Bb cornet, but speaks in a piercing, soaring high register sounding in Concert Eb major.',
     notes: [
       { name: 'C4', octave: 4, concertName: 'Eb4', valves: [], valveLabel: 'Open', frequencyHz: 311.13 },
       { name: 'D4', octave: 4, concertName: 'F4', valves: [1, 3], valveLabel: '1 + 3', frequencyHz: 349.23 },
@@ -244,6 +343,158 @@ export const SCALE_LESSONS: ScaleDefinition[] = [
       { name: 'A4', octave: 4, concertName: 'C5', valves: [1, 2], valveLabel: '1 + 2', frequencyHz: 523.25 },
       { name: 'B4', octave: 4, concertName: 'D5', valves: [2], valveLabel: '2nd', frequencyHz: 587.33 },
       { name: 'C5', octave: 5, concertName: 'Eb5', valves: [], valveLabel: 'Open', frequencyHz: 622.25 }
+    ]
+  },
+  {
+    id: 'c-scale-eb-horn',
+    title: 'Written C Major Scale on Eb Tenor Horn',
+    instrumentKey: 'Eb',
+    instrumentName: 'Eb Tenor Horn',
+    writtenKey: 'C Major (no sharps/flats)',
+    concertKey: 'Eb Major (3 flats: Bb, Eb, Ab)',
+    explanation: 'Notice the magic: The fingerings are EXACTLY the same as the Cornet! But because this instrument is pitched in Eb, it sounds in Concert Eb major (an octave below Soprano Cornet).',
+    notes: [
+      { name: 'C4', octave: 4, concertName: 'Eb3', valves: [], valveLabel: 'Open', frequencyHz: 155.56 },
+      { name: 'D4', octave: 4, concertName: 'F3', valves: [1, 3], valveLabel: '1 + 3', frequencyHz: 174.61 },
+      { name: 'E4', octave: 4, concertName: 'G3', valves: [1, 2], valveLabel: '1 + 2', frequencyHz: 196.00 },
+      { name: 'F4', octave: 4, concertName: 'Ab3', valves: [1], valveLabel: '1st', frequencyHz: 207.65 },
+      { name: 'G4', octave: 4, concertName: 'Bb3', valves: [], valveLabel: 'Open', frequencyHz: 233.08 },
+      { name: 'A4', octave: 4, concertName: 'C4', valves: [1, 2], valveLabel: '1 + 2', frequencyHz: 261.63 },
+      { name: 'B4', octave: 4, concertName: 'D4', valves: [2], valveLabel: '2nd', frequencyHz: 293.66 },
+      { name: 'C5', octave: 5, concertName: 'Eb4', valves: [], valveLabel: 'Open', frequencyHz: 311.13 }
+    ]
+  },
+  {
+    id: 'c-scale-bb-baritone',
+    title: 'Written C Major Scale on Bb Baritone Horn',
+    instrumentKey: 'Bb',
+    instrumentName: 'Bb Baritone Horn',
+    writtenKey: 'C Major (no sharps/flats)',
+    concertKey: 'Bb Major (2 flats: Bb, Eb)',
+    explanation: 'The Baritone reads treble clef just like the cornet! Written C is open, D is 1+3. Because of its 9-foot tube, it sounds one octave below the cornet.',
+    notes: [
+      { name: 'C4', octave: 4, concertName: 'Bb2', valves: [], valveLabel: 'Open', frequencyHz: 116.54 },
+      { name: 'D4', octave: 4, concertName: 'C3', valves: [1, 3], valveLabel: '1 + 3', frequencyHz: 130.81 },
+      { name: 'E4', octave: 4, concertName: 'D3', valves: [1, 2], valveLabel: '1 + 2', frequencyHz: 146.83 },
+      { name: 'F4', octave: 4, concertName: 'Eb3', valves: [1], valveLabel: '1st', frequencyHz: 155.56 },
+      { name: 'G4', octave: 4, concertName: 'F3', valves: [], valveLabel: 'Open', frequencyHz: 174.61 },
+      { name: 'A4', octave: 4, concertName: 'G3', valves: [1, 2], valveLabel: '1 + 2', frequencyHz: 196.00 },
+      { name: 'B4', octave: 4, concertName: 'A3', valves: [2], valveLabel: '2nd', frequencyHz: 220.00 },
+      { name: 'C5', octave: 5, concertName: 'Bb3', valves: [], valveLabel: 'Open', frequencyHz: 233.08 }
+    ]
+  },
+  {
+    id: 'c-scale-bb-euphonium',
+    title: 'Written C Major Scale on Bb Euphonium',
+    instrumentKey: 'Bb',
+    instrumentName: 'Bb Euphonium (4-Valve Compensating)',
+    writtenKey: 'C Major (no sharps/flats)',
+    concertKey: 'Bb Major (2 flats: Bb, Eb)',
+    explanation: 'The singing voice of the band. In British brass band scores, reads in treble clef. On low D, euphonium players can use 1+3 or the 4th valve for sweeter intonation.',
+    notes: [
+      { name: 'C4', octave: 4, concertName: 'Bb2', valves: [], valveLabel: 'Open', frequencyHz: 116.54 },
+      { name: 'D4', octave: 4, concertName: 'C3', valves: [1, 3], valveLabel: '1 + 3 (or 4th)', frequencyHz: 130.81 },
+      { name: 'E4', octave: 4, concertName: 'D3', valves: [1, 2], valveLabel: '1 + 2', frequencyHz: 146.83 },
+      { name: 'F4', octave: 4, concertName: 'Eb3', valves: [1], valveLabel: '1st', frequencyHz: 155.56 },
+      { name: 'G4', octave: 4, concertName: 'F3', valves: [], valveLabel: 'Open', frequencyHz: 174.61 },
+      { name: 'A4', octave: 4, concertName: 'G3', valves: [1, 2], valveLabel: '1 + 2', frequencyHz: 196.00 },
+      { name: 'B4', octave: 4, concertName: 'A3', valves: [2], valveLabel: '2nd', frequencyHz: 220.00 },
+      { name: 'C5', octave: 5, concertName: 'Bb3', valves: [], valveLabel: 'Open', frequencyHz: 233.08 }
+    ]
+  },
+  {
+    id: 'c-scale-bb-trombone',
+    title: 'Written C Major Scale on Bb Tenor Trombone (Slide Positions)',
+    instrumentKey: 'Bb',
+    instrumentName: 'Bb Tenor Trombone (British Treble Clef)',
+    writtenKey: 'C Major (British Band Treble Clef)',
+    concertKey: 'Bb Major (Sounds Bb2 to Bb3)',
+    explanation: 'Unique British brass band tradition: Tenor trombones read in Treble Clef! Instead of valves, you navigate 7 slide positions. Written C is 1st Pos, D is 6th Pos, E is 4th Pos, F is 3rd Pos, G is 1st Pos, A is 4th Pos, B is 2nd Pos, and high C is 1st Pos!',
+    notes: [
+      { name: 'C4 (Middle C)', octave: 4, concertName: 'Bb2', valves: [], valveLabel: '1st Position', slidePosition: 1, slideLabel: '1st Pos (Closed)', frequencyHz: 116.54 },
+      { name: 'D4', octave: 4, concertName: 'C3', valves: [], valveLabel: '6th Position', slidePosition: 6, slideLabel: '6th Pos (Full Reach)', frequencyHz: 130.81 },
+      { name: 'E4', octave: 4, concertName: 'D3', valves: [], valveLabel: '4th Position', slidePosition: 4, slideLabel: '4th Pos (Past Bell)', frequencyHz: 146.83 },
+      { name: 'F4', octave: 4, concertName: 'Eb3', valves: [], valveLabel: '3rd Position', slidePosition: 3, slideLabel: '3rd Pos (Bell Rim)', frequencyHz: 155.56 },
+      { name: 'G4', octave: 4, concertName: 'F3', valves: [], valveLabel: '1st Position', slidePosition: 1, slideLabel: '1st Pos (Closed)', frequencyHz: 174.61 },
+      { name: 'A4', octave: 4, concertName: 'G3', valves: [], valveLabel: '4th (or 2nd)', slidePosition: 4, slideLabel: '4th Pos (Harmonic)', frequencyHz: 196.00 },
+      { name: 'B4', octave: 4, concertName: 'A3', valves: [], valveLabel: '2nd Position', slidePosition: 2, slideLabel: '2nd Pos (3" out)', frequencyHz: 220.00 },
+      { name: 'C5 (Treble C)', octave: 5, concertName: 'Bb3', valves: [], valveLabel: '1st Position', slidePosition: 1, slideLabel: '1st Pos (Closed)', frequencyHz: 233.08 }
+    ]
+  },
+  {
+    id: 'c-scale-bass-trombone',
+    title: 'Concert C Major Scale on Bass Trombone (Bass Clef)',
+    instrumentKey: 'C',
+    instrumentName: 'Bass Trombone (Concert Bass Clef)',
+    writtenKey: 'Concert C Major (Bass Clef)',
+    concertKey: 'Concert C Major (C3 to C4)',
+    explanation: 'The only non-transposing brass instrument in the band. Reads Concert Bass Clef. Slide positions: C3 is 6th Pos (or 1st pos with F-trigger!), D3 is 4th Pos, E3 is 2nd Pos, F3 is 1st Pos, G3 is 4th Pos, A3 is 2nd Pos, B3 is 4th/7th Pos, C4 is 3rd Pos.',
+    notes: [
+      { name: 'C3', octave: 3, concertName: 'C3', valves: [], valveLabel: '6th Pos (or 1st+F)', slidePosition: 6, slideLabel: '6th Pos (or 1st+F Trigger)', frequencyHz: 130.81 },
+      { name: 'D3', octave: 3, concertName: 'D3', valves: [], valveLabel: '4th Position', slidePosition: 4, slideLabel: '4th Pos (Past Bell)', frequencyHz: 146.83 },
+      { name: 'E3', octave: 3, concertName: 'E3', valves: [], valveLabel: '2nd Position', slidePosition: 2, slideLabel: '2nd Pos (3" out)', frequencyHz: 164.81 },
+      { name: 'F3', octave: 3, concertName: 'F3', valves: [], valveLabel: '1st Position', slidePosition: 1, slideLabel: '1st Pos (Home)', frequencyHz: 174.61 },
+      { name: 'G3', octave: 3, concertName: 'G3', valves: [], valveLabel: '4th Position', slidePosition: 4, slideLabel: '4th Pos', frequencyHz: 196.00 },
+      { name: 'A3', octave: 3, concertName: 'A3', valves: [], valveLabel: '2nd Position', slidePosition: 2, slideLabel: '2nd Pos', frequencyHz: 220.00 },
+      { name: 'B3', octave: 3, concertName: 'B3', valves: [], valveLabel: '4th Position', slidePosition: 4, slideLabel: '4th Pos (7th partial)', frequencyHz: 246.94 },
+      { name: 'C4', octave: 4, concertName: 'C4', valves: [], valveLabel: '3rd Position', slidePosition: 3, slideLabel: '3rd Pos (Bell Rim)', frequencyHz: 261.63 }
+    ]
+  },
+  {
+    id: 'c-scale-eb-bass',
+    title: 'Written C Major Scale on Eb Bass (EEb Tuba)',
+    instrumentKey: 'Eb',
+    instrumentName: 'Eb Bass (EEb Tuba, Treble Clef)',
+    writtenKey: 'C Major (British Band Treble Clef)',
+    concertKey: 'Eb Major (Sounds Eb1 to Eb2)',
+    explanation: 'The giant EEb Tuba reads treble clef! Written C is open, D is 1+3 (or 4th valve), E is 1+2. Sounds an octave and a major 6th lower (deep, punchy tuba bass).',
+    notes: [
+      { name: 'C4', octave: 4, concertName: 'Eb1', valves: [], valveLabel: 'Open', frequencyHz: 38.89 },
+      { name: 'D4', octave: 4, concertName: 'F1', valves: [1, 3], valveLabel: '1 + 3 (or 4th)', frequencyHz: 43.65 },
+      { name: 'E4', octave: 4, concertName: 'G1', valves: [1, 2], valveLabel: '1 + 2', frequencyHz: 49.00 },
+      { name: 'F4', octave: 4, concertName: 'Ab1', valves: [1], valveLabel: '1st', frequencyHz: 51.91 },
+      { name: 'G4', octave: 4, concertName: 'Bb1', valves: [], valveLabel: 'Open', frequencyHz: 58.27 },
+      { name: 'A4', octave: 4, concertName: 'C2', valves: [1, 2], valveLabel: '1 + 2', frequencyHz: 65.41 },
+      { name: 'B4', octave: 4, concertName: 'D2', valves: [2], valveLabel: '2nd', frequencyHz: 73.42 },
+      { name: 'C5', octave: 5, concertName: 'Eb2', valves: [], valveLabel: 'Open', frequencyHz: 77.78 }
+    ]
+  },
+  {
+    id: 'c-scale-bb-bass',
+    title: 'Written C Major Scale on Bb Bass (BBb Tuba)',
+    instrumentKey: 'Bb',
+    instrumentName: 'Bb Bass (BBb Tuba, Treble Clef)',
+    writtenKey: 'C Major (British Band Treble Clef)',
+    concertKey: 'Bb Major (Sounds Bb0 to Bb1)',
+    explanation: 'The heaviest voice in the band reads treble clef! Written C is open. Sounds TWO octaves and a major second below written pitch. Tremendous sub-bass weight!',
+    notes: [
+      { name: 'C4', octave: 4, concertName: 'Bb0', valves: [], valveLabel: 'Open', frequencyHz: 29.14 },
+      { name: 'D4', octave: 4, concertName: 'C1', valves: [1, 3], valveLabel: '1 + 3 (or 4th)', frequencyHz: 32.70 },
+      { name: 'E4', octave: 4, concertName: 'D1', valves: [1, 2], valveLabel: '1 + 2', frequencyHz: 36.71 },
+      { name: 'F4', octave: 4, concertName: 'Eb1', valves: [1], valveLabel: '1st', frequencyHz: 38.89 },
+      { name: 'G4', octave: 4, concertName: 'F1', valves: [], valveLabel: 'Open', frequencyHz: 43.65 },
+      { name: 'A4', octave: 4, concertName: 'G1', valves: [1, 2], valveLabel: '1 + 2', frequencyHz: 49.00 },
+      { name: 'B4', octave: 4, concertName: 'A1', valves: [2], valveLabel: '2nd', frequencyHz: 55.00 },
+      { name: 'C5', octave: 5, concertName: 'Bb1', valves: [], valveLabel: 'Open', frequencyHz: 58.27 }
+    ]
+  },
+  {
+    id: 'c-scale-glockenspiel',
+    title: 'Concert C Major Scale on Glockenspiel & Mallets',
+    instrumentKey: 'C',
+    instrumentName: 'Tuned Percussion (Glockenspiel)',
+    writtenKey: 'Concert C Major (Treble Clef)',
+    concertKey: 'Concert C Major (Sounds 2 octaves higher: C7)',
+    explanation: 'Crystal bell notes. In brass bands, tuned percussion cuts through loud brass tutti climaxes with brilliant festive sparkle.',
+    notes: [
+      { name: 'C5', octave: 5, concertName: 'C7', valves: [], valveLabel: 'Bar 1', frequencyHz: 1046.50 },
+      { name: 'D5', octave: 5, concertName: 'D7', valves: [], valveLabel: 'Bar 2', frequencyHz: 1174.66 },
+      { name: 'E5', octave: 5, concertName: 'E7', valves: [], valveLabel: 'Bar 3', frequencyHz: 1318.51 },
+      { name: 'F5', octave: 5, concertName: 'F7', valves: [], valveLabel: 'Bar 4', frequencyHz: 1396.91 },
+      { name: 'G5', octave: 5, concertName: 'G7', valves: [], valveLabel: 'Bar 5', frequencyHz: 1567.98 },
+      { name: 'A5', octave: 5, concertName: 'A7', valves: [], valveLabel: 'Bar 6', frequencyHz: 1760.00 },
+      { name: 'B5', octave: 5, concertName: 'B7', valves: [], valveLabel: 'Bar 7', frequencyHz: 1975.53 },
+      { name: 'C6', octave: 6, concertName: 'C8', valves: [], valveLabel: 'Bar 8', frequencyHz: 2093.00 }
     ]
   },
   {
@@ -361,6 +612,22 @@ export const BRASS_QUIZ_QUESTIONS: QuizQuestion[] = [
     options: ['1st partial (pedal note)', '3rd partial', '7th partial', 'Sub-harmonic resonance'],
     correctIndex: 1,
     explanation: 'The 3rd harmonic of a brass instrument’s natural open series is the 5th interval above the fundamental (G above C).'
+  },
+  {
+    id: 9,
+    category: 'fingerings',
+    question: 'On a Bb Tenor Trombone, which slide position is reached when the outer slide brace lines up directly with the bell rim?',
+    options: ['1st Position', '2nd Position', '3rd Position', '5th Position'],
+    correctIndex: 2,
+    explanation: '3rd Position has the most reliable visual landmark on the trombone: the outer slide brace aligns directly with the bell rim!'
+  },
+  {
+    id: 10,
+    category: 'transposition',
+    question: 'In British brass band treble clef notation, which slide position plays written D4 on a Bb Tenor Trombone?',
+    options: ['1st Position', '3rd Position', '4th Position', '6th Position'],
+    correctIndex: 3,
+    explanation: 'Written D4 (which sounds Concert C3) is played in 6th Position at near-full arm extension!'
   }
 ];
 
